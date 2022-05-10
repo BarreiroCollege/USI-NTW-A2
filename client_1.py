@@ -1,12 +1,11 @@
 import socket
 
-from settings import HOST, BUFF_SIZE, ENCODING, FLAG_LENGTH, get_port_for_challenge
+from settings import HOST, BUFF_SIZE, ENCODING, get_port_for_challenge
 
 
 def get_flag(s: socket):
     data = s.recv(BUFF_SIZE)
     flag = data.decode(ENCODING).strip()
-    assert len(flag) == FLAG_LENGTH
     print(flag)
 
 

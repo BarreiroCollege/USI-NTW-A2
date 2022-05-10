@@ -1,6 +1,6 @@
 import socket
 
-from settings import HOST, ENCODING, BUFF_SIZE, FLAG_LENGTH, get_port_for_challenge
+from settings import HOST, ENCODING, BUFF_SIZE, get_port_for_challenge
 
 
 def send_helo(s: socket):
@@ -12,7 +12,6 @@ def send_helo(s: socket):
 def get_flag(s: socket):
     data, server = s.recvfrom(BUFF_SIZE)
     flag = data.decode(ENCODING).strip()
-    assert len(flag) == FLAG_LENGTH
     print(flag)
 
 
