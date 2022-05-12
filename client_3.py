@@ -26,6 +26,5 @@ def challenge3():
         get_flag(s)
 
 
-
 if __name__ == '__main__':
     challenge3()
