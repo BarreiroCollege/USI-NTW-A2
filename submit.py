@@ -81,7 +81,7 @@ if __name__ == '__main__':
                         help="username of the user to which the flag(s) will be registered",
                         type=str,
                         required=True)
-    # Accept a custom port number as argument
+    # Optionally allow specifying a single challenge
     total_challenges = range(1, 10 + 1)
     parser.add_argument("-c", "--challenge",
                         help="challenge of which the flag will be submitted (if none, it will submit all of them)",
