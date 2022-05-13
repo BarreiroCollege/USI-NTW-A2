@@ -8,12 +8,12 @@ on:
 
 jobs:
   clients:
-    name: ' First flag with TCP'
+    name: 'Test Clients'
     runs-on: 'ubuntu-22.04'
 
     strategy:
       matrix:
-        client_x: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        client: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
     steps:
       - name: Checkout repo
@@ -22,4 +22,4 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.9
-      - run: 'python client_${{ client_x }}.py'
+      - run: 'python client_${{ matrix.client }}.py'
