@@ -52,13 +52,13 @@ def send_interface(s: socket, iface: str):
     print(iface)
 
 
-def get_flag(s: socket):
+def get_flag(s: socket) -> None:
     data = s.recv(BUFF_SIZE)
     flag = data.decode(ENCODING).strip()
     print(flag)
 
 
-def challenge9():
+def challenge9() -> None:
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.connect((HOST, get_port_for_challenge(9)))
         ifaces, default, destination = get_interfaces_and_destination(s)

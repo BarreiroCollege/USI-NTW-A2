@@ -28,13 +28,13 @@ def send_checksum(s: socket, checksum: str):
     print(checksum)
 
 
-def get_flag(s: socket):
+def get_flag(s: socket) -> None:
     data = s.recv(BUFF_SIZE)
     flag = data.decode(ENCODING).strip()
     print(flag)
 
 
-def challenge10():
+def challenge10() -> None:
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.connect((HOST, get_port_for_challenge(10)))
         bs = get_two_bytes(s)
