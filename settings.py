@@ -16,7 +16,7 @@ FLAG_LENGTH = 64
 ARG_ALL_CHALLENGES = 0
 
 
-def get_port_for_challenge(challenge: int):
+def get_port_for_challenge(challenge: int) -> int:
     """
     Given the challenge number, return the port that such CTF is running
     :param challenge: number of the challenge from 1 to 10
@@ -28,7 +28,7 @@ def get_port_for_challenge(challenge: int):
     return INITIAL_PORT + (challenge - 1)
 
 
-def get_client_file(challenge: int):
+def get_client_file(challenge: int) -> str:
     """
     Returns the file that should have the code for that challenge.
     :param challenge: number of the challenge
