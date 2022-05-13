@@ -16,15 +16,24 @@ def get_ip_and_mask(s: socket) -> Tuple[str, int]:
 def calculate_network(ip: str, mask: int) -> str:
     real_ip = 0
     for i, part in enumerate(ip.split(".")):
-        real_ip += int(part) << (8 * (3 - i))
-    real_mask = ((2 ** mask) - 1) << (32 - mask)
+        part = int(part)
+        fill_zeros_n = 8 * (3 - i)
+        real_ip += part << fill_zeros_n
+
+    mask_ones = (2 ** mask) - 1
+    mask_zeros_n = 32 - mask
+    real_mask = mask_ones << mask_zeros_n
+
     real_net = real_ip & real_mask
 
     octets = []
     helper = (2 ** 8) - 1
     for exp in [3, 2, 1, 0]:
         byte = helper << (8 * exp)
-        octets.append(str((real_net & byte) >> (8 * exp)))
+        real_byte = real_net & byte
+        right_bytes_displacement = 8 * exp
+        octets.append(str(real_byte >> right_bytes_displacement))
+
     network = ".".join(octets)
     return network
 
