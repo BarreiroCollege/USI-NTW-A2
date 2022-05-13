@@ -16,7 +16,9 @@ def get_data(s: socket) -> Tuple[int, float, int]:
 
 
 def calculate_ertt(rtt: int, alpha: float, lrtt: int) -> int:
-    return round((rtt * (1 - alpha)) + (lrtt * alpha))
+    old_rtt = rtt * (1 - alpha)
+    new_rtt = lrtt * alpha
+    return round(old_rtt + new_rtt)
 
 
 def send_ertt(s: socket, ertt: int):
