@@ -4,7 +4,7 @@ from typing import Tuple
 from settings import HOST, BUFF_SIZE, ENCODING, get_port_for_challenge
 
 
-def get_ip_and_mask(s: socket):
+def get_ip_and_mask(s: socket) -> Tuple[str, int]:
     data = s.recv(BUFF_SIZE)
     ip_mask = data.decode(ENCODING).strip()
     print(ip_mask)
@@ -13,36 +13,42 @@ def get_ip_and_mask(s: socket):
     return ip, mask
 
 
-def calculate_network(ip: str, mask: int):
-    ip_new = ip.split(".")
+def calculate_network(ip: str, mask: int) -> str:
     real_ip = 0
-    for i, part in enumerate(ip_new):
+    for i, part in enumerate(ip.split(".")):
         part = int(part)
-        temp = part << 8*(3-i)
-        real_ip = real_ip + temp
-    real_mask = ((2**mask) - 1) << (32 - mask)
-    real_network = real_ip & real_mask
+        fill_zeros_n = 8 * (3 - i)
+        real_ip += part << fill_zeros_n
+
+    mask_ones = (2 ** mask) - 1
+    mask_zeros_n = 32 - mask
+    real_mask = mask_ones << mask_zeros_n
+
+    real_net = real_ip & real_mask
 
     octets = []
-    helper = (2**8) - 1
-    for exp in [3,2,1,0]:
-        byte = helper << (exp*8)
-        temp = real_network & byte
-        temp2 = temp >> (exp*8)
-        octets.append(str(temp2))
-    return ".".join(octets)
+    helper = (2 ** 8) - 1
+    for exp in [3, 2, 1, 0]:
+        byte = helper << (8 * exp)
+        real_byte = real_net & byte
+        right_bytes_displacement = 8 * exp
+        octets.append(str(real_byte >> right_bytes_displacement))
+
+    network = ".".join(octets)
+    return network
 
 
 def send_network(s: socket, network: str):
     s.send(network.encode(ENCODING))
     print(network)
 
+
 def get_flag(s: socket):
     data = s.recv(BUFF_SIZE)
     flag = data.decode(ENCODING).strip()
     print(flag)
 
-# Plan pseudo-code
+
 def challenge8():
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.connect((HOST, get_port_for_challenge(8)))
