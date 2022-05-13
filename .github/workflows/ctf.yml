@@ -1,0 +1,25 @@
+name: 'Capture The Flag'
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  clients:
+    name: ' First flag with TCP'
+    runs-on: 'ubuntu-22.04'
+
+    strategy:
+      matrix:
+        client_x: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Set Up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - run: 'python client_${{ client_x }}.py'
