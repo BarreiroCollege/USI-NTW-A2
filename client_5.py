@@ -26,7 +26,9 @@ def get_data(s: socket) -> Tuple[float, float, float]:
 
 
 def calculate_delay(l, r1, r2) -> float:
-    return l / r1 + l / r2
+    n1 = l / r1
+    n2 = l / r2
+    return n1 + n2
 
 
 def send_delay(s: socket, delay: float):
